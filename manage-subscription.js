@@ -14,13 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         success: function(response) {
           window.location.href = response;
-          /*if (response.success) {
-            // Redirect to Stripe's portal
-            window.location.href = response;
-          } else {
-            alert(response.message || "Unable to access subscription management.");
-            $("#manage-subscription").text("Manage Subscription").prop('disabled', false);
-          }*/
         },
         error: function(xhr, status, error) {
           console.error("Error:", error);
