@@ -29,7 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
         contentType: "application/json",
         success: function(response) {
           // Redirect to Stripe Checkout URL from Xano response
-          window.location.href = response.checkoutUrl;
+         // window.location.href = response.checkoutUrl;
+         alert('success!');
         },
         error: function(xhr, status, error) {
           // Handle error
