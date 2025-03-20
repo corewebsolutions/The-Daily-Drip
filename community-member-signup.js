@@ -28,10 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
         data: JSON.stringify(formData),
         contentType: "application/json",
         success: function(response) {
-        // Redirect to Stripe Checkout URL from Xano response
-         window.location.href = response.checkoutUrl;
-         localStorage.setItem('authToken',response.authToken);
-         
+            localStorage.setItem('authToken',response.authToken); // create authToken
+            window.location.href = response.checkoutUrl; // Redirect to Stripe Checkout URL from Xano response              
         },
         error: function(xhr, status, error) {
           // Handle error
