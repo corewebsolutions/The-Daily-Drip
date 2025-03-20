@@ -34,14 +34,11 @@ $("#email-form").submit(function (event) {
       /* Set Local Storage Data */
       localStorage.setItem('baseUrl',baseUrl);
       localStorage.setItem("authToken", response.authToken);
-      localStorage.setItem("clientApiKey", response.user_info.client_api_key);
-      localStorage.setItem("userId", response.user_info.user_id);
-      localStorage.setItem("userRecId", response.user_info.id);
-      localStorage.setItem("userRole", response.user_info.user_role);
+      localStorage.setItem("memberType", response.user_info.member_type);
+      localStorage.setItem("status", response.user_info.status);
       localStorage.setItem("firstName", response.user_info.first_name);
       localStorage.setItem("lastName", response.user_info.last_name);
-      localStorage.setItem("email", response.user_info.email);
-      localStorage.setItem("displayName", response.user_info.display_name);       
+      localStorage.setItem("email", response.user_info.email);     
         
     },
     error: function (error) {
