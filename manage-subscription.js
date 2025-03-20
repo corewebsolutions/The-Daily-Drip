@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-
+//updated
     // Listen for clicks on the manage subscription button
     $("#manage-subscription").click(function() {
       // Show loading state

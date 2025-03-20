@@ -1,6 +1,6 @@
 const baseUrl = "https://xxdy-xbul-g3ez.n7d.xano.io";
 
-
+//updated
 // Handle form submission
 $("#email-form").submit(function (event) {
 

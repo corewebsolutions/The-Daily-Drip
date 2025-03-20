@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    //updated
     $("#community-member-signup").submit(function(e) {
       e.preventDefault(); // Prevent default form submission
       
