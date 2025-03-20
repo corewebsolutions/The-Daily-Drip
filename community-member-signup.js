@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    $("#wf-form-Community-Member-Signup").submit(function(e) {
+    $("#community-member-signup").submit(function(e) {
       e.preventDefault(); // Prevent default form submission
       
       // Show loading state
