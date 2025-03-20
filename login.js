@@ -1,4 +1,5 @@
-const baseUrl = "https://xs9h-ivtd-slvk.n7c.xano.io/";
+const baseUrl = "https://x8ki-letl-twmt.n7.xano.io/";
+
 
 // Handle form submission
 $("#email-form").submit(function (event) {
