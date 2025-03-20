@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Send data to Xano to create temporary user and start Stripe checkout
       $.ajax({
-        url: "YOUR_XANO_API_ENDPOINT/initiate_checkout", // Replace with your actual endpoint
+        url: "https://x8ki-letl-twmt.n7.xano.io/api:RjbKSLFK/create_community_member", // Replace with your actual endpoint
         type: "POST",
         data: JSON.stringify(formData),
         contentType: "application/json",
