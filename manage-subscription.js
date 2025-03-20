@@ -1,4 +1,4 @@
-Copydocument.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
 
     // Listen for clicks on the manage subscription button
     $("#manage-subscription").click(function() {
