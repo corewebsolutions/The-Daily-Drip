@@ -13,13 +13,14 @@ document.addEventListener('DOMContentLoaded', function() {
           "Authorization": "Bearer " + localStorage.getItem('authToken')
         },
         success: function(response) {
-          if (response.success) {
+          window.location.href = response;
+          /*if (response.success) {
             // Redirect to Stripe's portal
             window.location.href = response;
           } else {
             alert(response.message || "Unable to access subscription management.");
             $("#manage-subscription").text("Manage Subscription").prop('disabled', false);
-          }
+          }*/
         },
         error: function(xhr, status, error) {
           console.error("Error:", error);
@@ -30,3 +31,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
   });
+
+
