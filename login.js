@@ -1,4 +1,4 @@
-const baseUrl = "https://x8ki-letl-twmt.n7.xano.io/";
+const baseUrl = "https://xxdy-xbul-g3ez.n7d.xano.io";
 
 
 // Handle form submission

@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Call your Xano endpoint to get a portal session URL
       $.ajax({
-        url: "https://x8ki-letl-twmt.n7.xano.io/api:RjbKSLFK/launch_stripe_customer_portal",
+        url: "https://xxdy-xbul-g3ez.n7d.xano.io/api:RjbKSLFK/launch_stripe_customer_portal",
         type: "GET",
         headers: {
           "Authorization": "Bearer " + localStorage.getItem('authToken')
