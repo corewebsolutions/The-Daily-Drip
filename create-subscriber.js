@@ -1,4 +1,52 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Track current slide for back button visibility
+    let currentSlide = 1;
+    
+    // Handle slide navigation
+    function updateBackButtonVisibility() {
+        const backButton = document.getElementById('go-back');
+        if (currentSlide > 1) {
+            // Show back button when not on first slide
+            backButton.style.opacity = "1";
+            backButton.style.pointerEvents = "auto";
+        } else {
+            // Hide back button on first slide
+            backButton.style.opacity = "0";
+            backButton.style.pointerEvents = "none";
+        }
+    }
+    
+    // Watch for slide changes
+    const sliderDots = document.querySelectorAll('.w-slider-dot');
+    sliderDots.forEach((dot, index) => {
+        dot.addEventListener('click', function() {
+            currentSlide = index + 1;
+            document.getElementById('current-slide').textContent = currentSlide;
+            updateBackButtonVisibility();
+        });
+    });
+    
+    // Handle next button click (advances slide)
+    document.getElementById('next-button').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (currentSlide < sliderDots.length) {
+            currentSlide++;
+            document.getElementById('current-slide').textContent = currentSlide;
+            sliderDots[currentSlide - 1].click(); // Click the appropriate dot
+            updateBackButtonVisibility();
+        }
+    });
+    
+    // Handle back button click
+    document.getElementById('go-back').addEventListener('click', function() {
+        if (currentSlide > 1) {
+            currentSlide--;
+            document.getElementById('current-slide').textContent = currentSlide;
+            sliderDots[currentSlide - 1].click(); // Click the appropriate dot
+            updateBackButtonVisibility();
+        }
+    });
+    
     // Handle form submission
     $("#sign-up-form").submit(function(e) {
       e.preventDefault(); // Prevent default form submission
@@ -65,8 +113,8 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
     
-    // Optional: Also handle the final "Create Account" button click
+    // Also handle the final "Create Account" button click
     $("input.next-button.fall-back").click(function() {
       $("#sign-up-form").submit();
     });
-  });
+});
