@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             //past-due
             if (localStorage.getItem("status") === "past_due") {
+                alert('past due!!!!');
                 $('#alert-past-due').show();
             }
 
