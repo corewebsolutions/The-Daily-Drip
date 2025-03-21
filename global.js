@@ -14,6 +14,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
     });
 
+    // login/logout button dynamic bvisibility
+    if (localStorage.authToken) {
+        $('.login-trigger').hide(); //hide login button
+        $('#logout-link').show(); //show logout button
+    } else {
+        $('.login-trigger').show(); //show login button
+        $('#logout-link').hide(); //hide logout button
+    }
+
     // check user's subscription status
     const alertStatus = localStorage.getItem("status");
        
