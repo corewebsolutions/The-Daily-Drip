@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $('[data-content="all-members"]').show();
         $('[data-content="free-members-upgrade"]').remove();
         $('[data-content="non-members-upgrade"]').remove();
+        $('[data-content="public"]').remove();
         
     } else {
         $('[data-content="premium-member"]').remove();
