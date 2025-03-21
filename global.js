@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $('[data-content="public"]').show();
         $('[data-content="all-members"]').remove();
         $('[data-content="premium-member"]').remove();
+        $('[data-content="free-members-upgrade"]').remove();
     }
 
 
