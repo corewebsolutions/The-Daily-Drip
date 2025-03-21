@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var Webflow = Webflow || [];
 
     Webflow.push(function() {
-        $('#thought-leader-signup').off('submit');
+        $(document).off('submit');
     });
 
   
