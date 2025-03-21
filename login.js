@@ -40,9 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
         error: function (error) {
             // show error block
             alert('Invalid username or password. Please try again.');
-            // Reset the button
-            $(this).find('button[type="submit"]').text("Sign In");
-            $(this).find('button[type="submit"]').css("pointer-events", "auto");
+
         }
         });
     });
