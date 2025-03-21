@@ -35,5 +35,37 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#alert-canceled').show();
     }
 
+    // Gated content check
+
+    // Premium Member
+    if (localStorage.getItem("authToken") && 
+    localStorage.getItem("memberType") !== "Subscriber" && 
+    localStorage.getItem("status") !== "canceled")
+    {
+        $('[data-content="premium-member"]').show();
+        $('[data-content="all-members"]').show();
+        $('[data-content="free-members-upgrade"]').remove();
+        
+    } else {
+        $('[data-content="premium-member"]').remove();
+        $('[data-content="all-members"]').remove();
+    }
+
+    // Free Member (Subscriber)
+    if (localStorage.getItem("authToken") && 
+    localStorage.getItem("memberType") === "Subscriber" && 
+    localStorage.getItem("status") !== "canceled")
+    {
+        $('[data-content="all-members"]').show();
+        $('[data-content="premium-member"]').remove();
+        $('[data-content="free-members-upgrade"]').show();
+    } 
+
+    // Public/non-members
+    if (!localStorage.getItem("authToken")) {
+        // No authToken exists - user is NOT logged in
+        $('[data-content="public"]').show();
+    }
+
 
 });
