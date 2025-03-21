@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    $("#email-form").submit(function (event) {
+    $("#login-form").submit(function (event) {
         // Prevent the default form submission behavior
         event.preventDefault();
     
@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
         // Get values directly from the specific form fields
         const formData = {
-        "login-email": $("#login-email").val(), // Using the actual ID from your form
-        "login-password": $("#login-password").val()
+        "email": $("#login-email").val(), // Using the actual ID from your form
+        "password": $("#login-password").val()
         };
     
         // Make an login AJAX POST request
