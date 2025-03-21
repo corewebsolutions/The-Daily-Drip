@@ -31,6 +31,26 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem("email", response.user_info.email);  
             window.location.href = "/welcome-back"; // Redirect to page they were last on 
         },
+        complete: function(response) {
+
+            // check user's subscription status and update banners accordingly
+
+            //past-due
+            if (localStorage.getItem("status") === "past_due") {
+                $('#alert-past-due').show();
+            }
+
+            //unpaid
+            if (localStorage.getItem("status") === "unpaid") {
+                $('#alert-unpaid').show();
+            }
+
+            //canceled
+            if (localStorage.getItem("status") === "canceled") {
+                $('#alert-canceled').show();
+            }
+
+        },
         error: function (error) {
             // show error block
             alert('Invalid username or password. Please try again.');
