@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //logout func
     $('#logout-link').click(function(e) {
+
         e.preventDefault();
         localStorage.removeItem("authToken");
         localStorage.removeItem("memberType");
@@ -10,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.removeItem("lastName");
         localStorage.removeItem("email");
         window.location.href = "/"
+        
     });
 
     // check user's subscription status
