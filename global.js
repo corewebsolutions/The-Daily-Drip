@@ -58,8 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
     // Free Member (Subscriber)
     if (localStorage.getItem("authToken") && 
-    localStorage.getItem("memberType") === "Subscriber" && 
-    localStorage.getItem("status") !== "canceled")
+    localStorage.getItem("memberType") === "Subscriber" || 
+    localStorage.getItem("status") === "canceled")
     {
         $('[data-content="all-members"]').show();
         $('[data-content="premium-member"]').remove();
