@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
           }
           
           // Redirect to success page or dashboard
-          window.location.href = "/welcome-subscriber";
+          window.location.href = "/sign-up-confirmation";
         },
         error: function(xhr, status, error) {
           // Show error message
