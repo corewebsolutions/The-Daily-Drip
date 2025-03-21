@@ -30,6 +30,11 @@ document.addEventListener('DOMContentLoaded', function() {
         contentType: "application/json",
         success: function(response) {
             localStorage.setItem('authToken',response.authToken); // create authToken
+            localStorage.setItem("memberType", response.user_info.member_type);
+            localStorage.setItem("status", response.user_info.status);
+            localStorage.setItem("firstName", response.user_info.first_name);
+            localStorage.setItem("lastName", response.user_info.last_name);
+            localStorage.setItem("email", response.user_info.email); 
             window.location.href = response.checkoutUrl; // Redirect to Stripe Checkout URL from Xano response              
         },
         error: function(xhr, status, error) {
