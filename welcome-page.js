@@ -9,10 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Check if the URL is one of the subscription pages
     const subscriptionPages = [
-        'https://www.thedailydrip.com/subscribe',
+        'https://www.thedailydrip.com/test',
         'https://www.thedailydrip.com/membership/community-member',
-        'https://www.thedailydrip.com/membership/thought-leader-legacy',
-        'https://www.thedailydrip.com/membership/thought-leader'
+        'https://www.thedailydrip.com/thought-leader-application'
+  
     ];
     
     if (subscriptionPages.includes(redirectUrl)) {
