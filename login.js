@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
         data: formData,
         success: function (response) {
             /* Set Local Storage Data */
-            localStorage.setItem('baseUrl', baseUrl);
             localStorage.setItem("authToken", response.authToken);
             localStorage.setItem("memberType", response.user_info.member_type);
             localStorage.setItem("status", response.user_info.status);
