@@ -15,12 +15,11 @@ function fetchUserData() {
             success: function(response) {
 
                 /* Set Local Storage Data */
-                localStorage.setItem("authToken", response.authToken);
-                localStorage.setItem("memberType", response.user_info.member_type);
-                localStorage.setItem("status", response.user_info.status);
-                localStorage.setItem("firstName", response.user_info.first_name);
-                localStorage.setItem("lastName", response.user_info.last_name);
-                localStorage.setItem("email", response.user_info.email);  
+                localStorage.setItem("memberType", response.member_type);
+                localStorage.setItem("status", response.status);
+                localStorage.setItem("firstName", response.first_name);
+                localStorage.setItem("lastName", response.last_name);
+                localStorage.setItem("email", response.email);  
             },
             complete: function(response) {
 
