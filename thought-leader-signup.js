@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    var Webflow = Webflow || [];
+
+    Webflow.push(function() {
+        $('#thought-leader-signup').off('submit');
+    });
+
+  
     $("#thought-leader-signup").submit(function(e) {
       e.preventDefault(); // Prevent default form submission
       
