@@ -89,11 +89,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Gated content check
 
     // Premium Member
-    if (localStorage.getItem("authToken") && 
-        localStorage.getItem("memberType") !== "Subscriber" && 
-        localStorage.getItem("status") !== "canceled")
-    
-    {
+    if (
+        localStorage.getItem("authToken") &&
+        localStorage.getItem("memberType") !== "Subscriber" &&
+        localStorage.getItem("status") !== "canceled" &&
+        localStorage.getItem("status") !== "pending"
+    ) {
         $('[data-content="premium-member"]').show();
         $('[data-content="all-members"]').show();
         $('[data-content="free-members-upgrade"]').remove();
