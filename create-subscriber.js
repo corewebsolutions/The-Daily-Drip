@@ -82,12 +82,6 @@ document.addEventListener('DOMContentLoaded', function() {
             state: isNonUS ? $("#country-global").val() : $("#state").val()
         };
         
-        // Create a timeout to ensure redirect happens even if response is slow
-        const redirectTimeout = setTimeout(function() {
-            if (submitButton.prop('disabled')) {
-                window.location.href = "/sign-up-confirmation";
-            }
-        }, 8000); // 8 second fallback
         
         // Send data to create subscriber API endpoint
         $.ajax({
@@ -115,12 +109,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     'opacity': '1',
                     'background-color': '#4CAF50' // Green for success
                 });
-                
-                // Redirect to success page or dashboard (with a slight delay to show success state)
-                setTimeout(function() {
-                    clearTimeout(redirectTimeout);
-                    window.location.href = "/sign-up-confirmation";
-                }, 1000);
+
+                window.location.href = "/sign-up-confirmation";
+
             },
             error: function(xhr, status, error) {
                 // Cancel the redirect timeout
