@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem("firstName", response.user_info.first_name);
             localStorage.setItem("lastName", response.user_info.last_name);
             localStorage.setItem("email", response.user_info.email);  
-            window.location.href = "/welcome-back"; // Redirect to page they were last on 
+            
         },
         complete: function(response) {
 
@@ -50,6 +50,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (localStorage.getItem("status") === "canceled") {
                 $('#alert-canceled').show();
             }
+
+            window.location.href = "/welcome-back"; // Redirect to page they were last on 
 
         },
         error: function (error) {
