@@ -88,23 +88,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Gated content check
 
-// Premium Member
-if (localStorage.getItem("authToken") && 
+    // Premium Member
+    if (localStorage.getItem("authToken") && 
+        localStorage.getItem("memberType") !== "Subscriber" && 
+        localStorage.getItem("status") !== "canceled")
+    
+    {
+        $('[data-content="premium-member"]').show();
+        $('[data-content="all-members"]').show();
+        $('[data-content="free-members-upgrade"]').remove();
+        $('[data-content="non-members-upgrade"]').remove();
+        $('[data-content="public"]').remove();
+    }
+
+    // Premium Member Pending
+    if (localStorage.getItem("authToken") && 
     localStorage.getItem("memberType") !== "Subscriber" && 
-    localStorage.getItem("status") !== "canceled" && 
-    localStorage.getItem("status") !== "pending")
-{
-    $('[data-content="premium-member"]').show();
-    $('[data-content="all-members"]').show();
-    $('[data-content="free-members-upgrade"]').remove();
-    $('[data-content="non-members-upgrade"]').remove();
-    $('[data-content="public"]').remove();
-}
-  
+    localStorage.getItem("status") === "pending")
+
+    {
+        $('[data-content="all-members"]').show();
+        $('[data-content="premium-member"]').remove();
+        $('[data-content="free-members-upgrade"]').show();
+        $('[data-content="public"]').remove();
+        $('[data-content="non-members-upgrade"]').remove();
+    }
+
+ 
     // Free Member (Subscriber)
     if (localStorage.getItem("authToken") && 
     localStorage.getItem("memberType") === "Subscriber" || 
     localStorage.getItem("status") === "canceled")
+    
     {
         $('[data-content="all-members"]').show();
         $('[data-content="premium-member"]').remove();
