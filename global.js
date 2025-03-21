@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $('[data-content="all-members"]').show();
         $('[data-content="premium-member"]').remove();
         $('[data-content="free-members-upgrade"]').show();
+        $('[data-content="public"]').remove();
     } 
 
     // Public/non-members
