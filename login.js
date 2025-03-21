@@ -26,7 +26,7 @@ $("#email-form").submit(function (event) {
 
   // Make an login AJAX POST request
   $.ajax({
-    url: baseUrl + "api:2yadJ61L/auth/login",
+    url: "https://xxdy-xbul-g3ez.n7d.xano.io/api:QpSbC3Ej/auth/login",
     type: "POST",
     data: formData,
     success: function (response) {
@@ -38,15 +38,16 @@ $("#email-form").submit(function (event) {
       localStorage.setItem("status", response.user_info.status);
       localStorage.setItem("firstName", response.user_info.first_name);
       localStorage.setItem("lastName", response.user_info.last_name);
-      localStorage.setItem("email", response.user_info.email);     
+      localStorage.setItem("email", response.user_info.email);  
+      window.location.href = "/welcome-back";// Redirect to page they were last on 
         
     },
     error: function (error) {
       // show error block
-      $(".form__error-block").css("display", "block");
+      alert('Invalid username or password. Please try again.');
       // Change the text of the submit button
-      $("#login-form").find('input[type="submit"]').val("Log In");
-      $("#login-form").find('input[type="submit"]').css("pointer-events", "auto");
+      //$("#login-form").find('input[type="submit"]').val("Log In");
+      //$("#login-form").find('input[type="submit"]').css("pointer-events", "auto");
     }
   });
 });
