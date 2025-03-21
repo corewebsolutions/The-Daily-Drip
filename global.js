@@ -66,6 +66,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!localStorage.getItem("authToken")) {
         // No authToken exists - user is NOT logged in
         $('[data-content="public"]').show();
+        $('[data-content="all-members"]').remove();
+        $('[data-content="premium-member"]').remove();
     }
 
 
