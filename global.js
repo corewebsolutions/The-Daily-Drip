@@ -15,12 +15,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // login/logout button dynamic bvisibility
+
+    //if logged in...
     if (localStorage.authToken) {
         $('.login-trigger').hide(); //hide login button
         $('#logout-link').show(); //show logout button
-    } else {
+        $('#my-account-link').show(); //show my account link
+        
+
+    } else { //if logged out
         $('.login-trigger').show(); //show login button
         $('#logout-link').hide(); //hide logout button
+        $('#my-account-link').hide(); //hide my account link
     }
 
     // check user's subscription status
