@@ -48,11 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
         $('[data-content="non-members-upgrade"]').remove();
         $('[data-content="public"]').remove();
         
-    } else {
-        $('[data-content="premium-member"]').remove();
-        $('[data-content="all-members"]').remove();
-    }
-
+    } 
+  
     // Free Member (Subscriber)
     if (localStorage.getItem("authToken") && 
     localStorage.getItem("memberType") === "Subscriber" && 
