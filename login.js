@@ -33,24 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         complete: function(response) {
 
-            // check user's subscription status and update banners accordingly
-
-            //past-due
-            if (localStorage.getItem("status") === "past_due") {
-                alert('past due!!!!');
-                $('#alert-past-due').css('display','block');
-            }
-
-            //unpaid
-            if (localStorage.getItem("status") === "unpaid") {
-                $('#alert-unpaid').show();
-            }
-
-            //canceled
-            if (localStorage.getItem("status") === "canceled") {
-                $('#alert-canceled').show();
-            }
-
+           
             window.location.href = "/welcome-back"; // Redirect to page they were last on 
 
         },
