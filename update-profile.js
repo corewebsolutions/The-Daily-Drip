@@ -74,11 +74,6 @@ document.addEventListener('DOMContentLoaded', function() {
             email: $("#Email-2").val()
         };
         
-        // Only include password if it's not empty
-        if ($("#Password-2").val().trim() !== "") {
-            formData.password = $("#Password-2").val();
-        }
-        
         // Send update request (assuming you have an update endpoint)
         $.ajax({
             url: "https://xxdy-xbul-g3ez.n7d.xano.io/api:RjbKSLFK/update_profile",
