@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     window.location.href = "/login";
   } 
 
+  populateForm();
+
 
   $("#thought-leader-signup").submit(function(e) {
       e.preventDefault(); // Prevent default form submission
@@ -80,3 +82,48 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+function populateForm() {
+
+
+  $.ajax({
+    url: "https://xxdy-xbul-g3ez.n7d.xano.io/api:RjbKSLFK/populate_thought_leader_form_signup",
+    method: "GET", 
+    headers: {
+      "Authorization": "Bearer " + localStorage.getItem('authToken')
+    },
+    success: function (data) {
+      // Safely set each field
+      $("#First-Name-2").val(data.first_name || '');
+      $("#Last-Name-2").val(data.last_name || '');
+      $("#Company-Name-2").val(data.company_name || '');
+      $("#Industry-2").val(data.industry || '');
+      $("#Self-Employed-2").val(data.self_employed || '');
+      $("#Years-Practicing-2").val(data.years_practicing || '');
+      $("#City-2").val(data.city || '');
+      $("#State-2").val(data.state || '');
+      $("#job-title-2").val(data.job_title || '');
+
+      $("#Linkedin-2").val(data.linkedin || '');
+      $("#Twitter-2").val(data.twitter || '');
+      $("#Instagram-2").val(data.instagram || '');
+      $("#Facebook-2").val(data.facebook || '');
+      $("#Website-2").val(data.website || '');
+
+      $("#Bio-2").val(data.bio || '');
+      $("#birthday").val(data.birthday || '');
+      $("#phone-2").val(data.phone_number || '');
+
+      $("#mailing-street-3").val(data.street_address || '');
+      $("#mailing-street-2").val(data.street_address_2 || '');
+      $("#mailing-city-2").val(data.mailing_city || '');
+      $("#mailing-state-2").val(data.mailing_state || '');
+
+      $("#field-2").val(data.profile_image || '');
+      $(".profile-pic-url").val(data.profile_image || '');
+    },
+    error: function (xhr, status, error) {
+      console.error("Error fetching data:", error);
+    }
+  });
+
+}
