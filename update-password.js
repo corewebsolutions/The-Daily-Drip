@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert("Your password has been successfully updated.");
                 
                 // Redirect to login page
-                window.location.href = "/welcome-back";
+                window.location.href = "/";
             },
             error: function(xhr, status, error) {
                 // Handle error
