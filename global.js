@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
         $('.login-trigger').hide(); //hide login button
         $('#logout-link').show(); //show logout button
         $('#my-account-link').show(); //show my account link
+        $('#alert-passwords').hide(); // remove membership update notification
+        
         
 
     } else { //if logged out
