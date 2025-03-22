@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem("firstName", response.user_info.first_name);
                 localStorage.setItem("lastName", response.user_info.last_name);
                 localStorage.setItem("email", response.user_info.email);  
-                $('#alert-passwords').hide(); // remove membership update notification
                 // ONLY redirect on success
                 window.location.href = "/welcome-back";
             },
