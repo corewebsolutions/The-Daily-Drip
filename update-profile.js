@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    
+
     // Function to populate form fields
     function populateFormFields(userData) {
         // Text inputs
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Send update request (assuming you have an update endpoint)
         $.ajax({
-            url: "https://xxdy-xbul-g3ez.n7d.xano.io/api:RjbKSLFK/update_user",
+            url: "https://xxdy-xbul-g3ez.n7d.xano.io/api:RjbKSLFK/update_profile",
             type: "POST",
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem('authToken')
