@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#logout-link').show(); //show logout button
         $('#my-account-link').show(); //show my account link
         $('#alert-passwords').hide(); // remove membership update notification
+        $('#subscriber-link').hide(); // remove membership update notification
+
 
         const membership = localStorage.getItem("memberType");
         if (membership === "Subscriber") {
