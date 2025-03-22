@@ -51,11 +51,13 @@ document.addEventListener('DOMContentLoaded', function() {
         $.ajax({
           url: "https://xxdy-xbul-g3ez.n7d.xano.io/api:RjbKSLFK/create_thought_leader", 
           type: "POST",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem('authToken')
+          },
           data: JSON.stringify(formData),
           contentType: "application/json",
           success: function(response) {
-              localStorage.setItem('authToken',response.authToken); // create authToken
-              window.location.href = response.checkoutUrl; // Redirect to Stripe Checkout URL from Xano response
+              window.location.href = responsel; // Redirect to Stripe Checkout URL from Xano response
           },
           error: function(xhr, status, error) {
             // Handle error
