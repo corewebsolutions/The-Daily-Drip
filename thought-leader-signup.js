@@ -14,8 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
           // User identity fields
           first_name: $("#First-Name-2").val(),
           last_name: $("#Last-Name-2").val(),
-          email: $("#Email-2").val(),
-          password: $("#Password-2").val(),
+
           
           // Profile information
           company_name: $("#Company-Name-2").val(),
