@@ -42,9 +42,18 @@ document.addEventListener('DOMContentLoaded', function() {
             success: function(response) {
                 // Show success message
                 alert("Your password has been successfully updated.");
+
+                /* Set Local Storage Data */
+                localStorage.setItem("authToken", response.authToken);
+                localStorage.setItem("memberType", response.user_info.member_type);
+                localStorage.setItem("status", response.user_info.status);
+                localStorage.setItem("firstName", response.user_info.first_name);
+                localStorage.setItem("lastName", response.user_info.last_name);
+                localStorage.setItem("email", response.user_info.email);
                 
                 // Redirect to login page
-                window.location.href = "/";
+                window.location.href = "/updating-account";
+
             },
             error: function(xhr, status, error) {
                 // Handle error
