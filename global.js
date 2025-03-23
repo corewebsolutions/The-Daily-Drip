@@ -107,8 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (
         localStorage.getItem("authToken") &&
         localStorage.getItem("memberType") !== "Subscriber" &&
-        localStorage.getItem("status") === "active"
-        
+        localStorage.getItem("status") !== "canceled" &&
+        localStorage.getItem("status") !== "pending"
 
     ) {
         $('[data-content="premium-member"]').show(); // VISIBLE
@@ -124,27 +124,9 @@ document.addEventListener('DOMContentLoaded', function() {
     localStorage.getItem("status") !== "active")
 
     {   /*-- Gated Box Func --*/
-         // Clone the visible alert
-        const $visibleAlert = $(".alert:visible").clone(true);
+        const $visibleAlert = $(".alert:visible").clone(true); // true = deep clone with events
         $(".alert-gated-box-text").html($visibleAlert.html()).show();
-
-        // Get the span inside alert (example: #resume-payment)
-        const $span = $visibleAlert.find("span.update-account");
-
-        if ($span.length) {
-            const buttonText = $span.text().trim();
-            const hrefValue = $span.attr("href") || $span.text().trim(); // fallback to span text if no href
-
-            // Update the button text and href
-            const $button = $(".sign-up-blog-button-wrapper a");
-            $button.text(buttonText);
-            $button.attr("href", hrefValue);
-
-            // ✅ Copy any additional attributes from span to button
-            $.each($span[0].attributes, function(_, attr) {
-            if (attr.name !== "id") {
-            $button.attr(attr.name, attr.value);
-            }
+        $('.alert-gated-box-text').show(); // SHOW GATED BOX TEXT
         /* --- Gated Box Func ---*/
 
 
