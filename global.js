@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.getItem("authToken") &&
         localStorage.getItem("memberType") !== "Subscriber" &&
         localStorage.getItem("status") !== "canceled" &&
-        localStorage.getItem("status") !== "pending"
+        localStorage.getItem("status") !== "active"
 
     ) {
         $('[data-content="premium-member"]').show(); // VISIBLE
