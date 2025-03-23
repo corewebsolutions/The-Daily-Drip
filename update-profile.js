@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const memberType = localStorage.getItem("memberType");
 
-    // Hide fields if user is NOT a Thought Leader
     if (memberType !== "Thought Leader") {
       $('#Linkedin-2').closest('.form__item').remove();
       $('#Twitter-2').closest('.form__item').remove();
@@ -20,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
       $('#Website-2').closest('.form__item').remove();
     }
 
-    // Fetch and populate user data
     function populateFormFields(user) {
       $('#First-Name-2').val(user.first_name);
       $('#Last-Name-2').val(user.last_name);
@@ -68,6 +66,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     $('#update_profile-form').on('submit', function (e) {
       e.preventDefault();
+
+      const $submitBtn = $(this).find('input[type="submit"]');
+      const originalText = $submitBtn.val();
+      $submitBtn.val('Updating...').prop('disabled', true);
+
       const formData = {
         first_name: $('#First-Name-2').val(),
         last_name: $('#Last-Name-2').val(),
@@ -104,11 +107,13 @@ document.addEventListener('DOMContentLoaded', function() {
         data: JSON.stringify(formData),
         contentType: 'application/json',
         success: function () {
-          alert('Profile updated successfully!');
+          $submitBtn.val('Updated!');
+          setTimeout(() => $submitBtn.val(originalText).prop('disabled', false), 2000);
         },
         error: function (xhr) {
           console.error('Error updating profile:', xhr.responseText);
           alert('Could not update your profile.');
+          $submitBtn.val(originalText).prop('disabled', false);
         }
       });
     });
