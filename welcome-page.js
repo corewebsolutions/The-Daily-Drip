@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const subscriptionPages = [
         'https://www.thedailydrip.com/test',
         'https://www.thedailydrip.com/membership/community-member',
-        'https://www.thedailydrip.com/membership/thought-leader'
+        'https://www.thedailydrip.com/membership/thought-leader',
+        'https://www.thedailydrip.com/membership/reset-password'
   
     ];
     
