@@ -142,7 +142,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const $button = $(".sign-up-blog-button-wrapper a");
             $button.text(buttonText);
             $button.attr("href", hrefValue);
-        }
+
+            // ✅ Copy any additional attributes from span to button
+            $.each($span[0].attributes, function(_, attr) {
+            if (attr.name !== "id") {
+            $button.attr(attr.name, attr.value);
+            }
         /* --- Gated Box Func ---*/
 
 
