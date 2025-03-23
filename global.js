@@ -120,9 +120,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Premium Member Pending
     if (localStorage.getItem("authToken") && 
     localStorage.getItem("memberType") !== "Subscriber" && 
-    localStorage.getItem("status") === "pending")
+    localStorage.getItem("status") !== "active")
 
     {
+        $('.alert-gated-box-text').show(); // SHOW GATED BOX TEXT
         $('[data-content="all-members"]').show(); // VISIBLE
         $('[data-content="free-members-upgrade"]').show(); //VISIBLE
         $('[data-content="premium-member"]').remove();
@@ -146,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Public/non-members
     if (!localStorage.getItem("authToken")) {
-        
+
         // No authToken exists - user is NOT logged in
         $('[data-content="public"]').show(); // VISIBLE
         $('[data-content="non-members-upgrade"]').show(); // VISIBLE
