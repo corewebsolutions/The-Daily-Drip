@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
         const $button = $(".sign-up-blog-button-wrapper a");
         $button.text(buttonText);
-        $button.attr("href", hrefValue);
+        $button.attr("href", "javascript:void(0);");
       
         // Optional: Copy all span attributes to the button (except ID)
         $.each($span[0].attributes, function (_, attr) {
