@@ -124,9 +124,22 @@ document.addEventListener('DOMContentLoaded', function() {
     localStorage.getItem("status") !== "active")
 
     {   /*-- Gated Box Func --*/
-        const $visibleAlert = $(".alert:visible").clone(true); // true = deep clone with events
+         // Clone the visible alert
+        const $visibleAlert = $(".alert:visible").clone(true);
         $(".alert-gated-box-text").html($visibleAlert.html()).show();
-        $('.alert-gated-box-text').show(); // SHOW GATED BOX TEXT
+
+        // Get the span inside alert (example: #resume-payment)
+        const $span = $visibleAlert.find("span.update-account");
+
+        if ($span.length) {
+            const buttonText = $span.text().trim();
+            const hrefValue = $span.attr("href") || $span.text().trim(); // fallback to span text if no href
+
+            // Update the button text and href
+            const $button = $(".sign-up-blog-button-wrapper a");
+            $button.text(buttonText);
+            $button.attr("href", hrefValue);
+        }
         /* --- Gated Box Func ---*/
 
 
