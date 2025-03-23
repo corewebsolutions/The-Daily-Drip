@@ -135,13 +135,33 @@ document.addEventListener('DOMContentLoaded', function() {
       // Premium Member Pending (NOT a Subscriber + NOT active)
       const $visibleAlert = $(".alert:visible").clone(true);
       $(".alert-gated-box-text").html($visibleAlert.html()).show();
-  
+      
+      // Grab the interactive <span> (e.g., with class 'update-account')
+      const $span = $visibleAlert.find("span.update-account");
+      
+      if ($span.length) {
+        const buttonText = $span.text().trim();
+      
+        // Try common link attributes in order of preference
+        const hrefValue = $span.attr("href") || $span.attr("data-link") || $span.attr("data-url") || "#";
+      
+        const $button = $(".sign-up-blog-button-wrapper a");
+        $button.text(buttonText);
+        $button.attr("href", hrefValue);
+      
+        // Optional: Copy all span attributes to the button (except ID)
+        $.each($span[0].attributes, function (_, attr) {
+          if (attr.name !== "id") {
+            $button.attr(attr.name, attr.value);
+          }
+        });
+      }
+      
       $('[data-content="all-members"]').show();
       $('[data-content="free-members-upgrade"]').show();
       $('[data-content="premium-member"]').remove();
       $('[data-content="public"]').remove();
       $('[data-content="non-members-upgrade"]').remove();
-    }
 
 
 
