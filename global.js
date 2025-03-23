@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.getItem("memberType") !== "Subscriber" &&
         localStorage.getItem("status") !== "canceled" &&
         localStorage.getItem("status") !== "pending"
+
     ) {
         $('[data-content="premium-member"]').show();
         $('[data-content="all-members"]').show();
