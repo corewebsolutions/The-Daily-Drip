@@ -110,8 +110,8 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.getItem("status") !== "pending"
 
     ) {
-        $('[data-content="premium-member"]').show();
-        $('[data-content="all-members"]').show();
+        $('[data-content="premium-member"]').show(); // VISIBLE
+        $('[data-content="all-members"]').show(); // VISIBLE
         $('[data-content="free-members-upgrade"]').remove();
         $('[data-content="non-members-upgrade"]').remove();
         $('[data-content="public"]').remove();
@@ -123,9 +123,9 @@ document.addEventListener('DOMContentLoaded', function() {
     localStorage.getItem("status") === "pending")
 
     {
-        $('[data-content="all-members"]').show();
+        $('[data-content="all-members"]').show(); // VISIBLE
+        $('[data-content="free-members-upgrade"]').show(); //VISIBLE
         $('[data-content="premium-member"]').remove();
-        $('[data-content="free-members-upgrade"]').show();
         $('[data-content="public"]').remove();
         $('[data-content="non-members-upgrade"]').remove();
     }
@@ -137,21 +137,23 @@ document.addEventListener('DOMContentLoaded', function() {
     localStorage.getItem("status") === "canceled")
 
     {
-        $('[data-content="all-members"]').show();
+        $('[data-content="all-members"]').show(); // VISIBLE
+        $('[data-content="free-members-upgrade"]').show(); // VISIBLE
         $('[data-content="premium-member"]').remove();
-        $('[data-content="free-members-upgrade"]').show();
         $('[data-content="public"]').remove();
         $('[data-content="non-members-upgrade"]').remove();
     } 
 
     // Public/non-members
     if (!localStorage.getItem("authToken")) {
+        
         // No authToken exists - user is NOT logged in
-        $('[data-content="public"]').show();
+        $('[data-content="public"]').show(); // VISIBLE
+        $('[data-content="non-members-upgrade"]').show(); // VISIBLE
         $('[data-content="all-members"]').remove();
         $('[data-content="premium-member"]').remove();
         $('[data-content="free-members-upgrade"]').remove();
-        $('[data-content="non-members-upgrade"]').show();
+        
     }
 
 
