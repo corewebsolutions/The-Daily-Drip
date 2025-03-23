@@ -45,19 +45,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // Show the appropriate alert
     if(alertStatus === "past_due") {
 
-        $('#alert-past-due').show();
+        //$('#alert-past-due').show();
+        $('[alert="past-due"]').show();
 
     } else if(alertStatus === "unpaid") {
 
-        $('#alert-unpaid').show();
+        //$('#alert-unpaid').show();
+        $('[alert="unpaid"]').show()
 
     } else if(alertStatus === "canceled") {
 
-        $('#alert-canceled').show();
+        //$('#alert-canceled').show();
+        $('[alert="canceled"]').show();
 
     } else if (alertStatus === "pending") {
 
-        $('#alert-account-pending').show();
+        //$('#alert-account-pending').show();
+        $('[alert="account-pending"]').show();
     }
 
 
