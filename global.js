@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //if logged in...
     if (localStorage.authToken) {
         $('#login-trigger').hide(); //hide login button
+        $('[data-user="logged-in"]').hide();
         $('#logout-link').show(); //show logout button
         $('#my-account-link').show(); //show my account link
         $('#alert-passwords').hide(); // remove membership update notification
@@ -33,10 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
       
 
     } else { //if logged out
-        $('.login-trigger').show(); //show login button
+        $('$login-trigger').show(); //show login button
         $('#logout-link').hide(); //hide logout button
         $('#my-account-link').hide(); //hide my account link
         $('#update-info').remove(); //show update 
+        $('[data-user="logged-in"]').show();
     }
 
     // check user's subscription status
