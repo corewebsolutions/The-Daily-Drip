@@ -108,6 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
         contentType: 'application/json',
         success: function () {
           $submitBtn.val('Updated!');
+          $('#alert-success').css('display', 'block').delay(3000).fadeOut();
           setTimeout(() => $submitBtn.val(originalText).prop('disabled', false), 2000);
         },
         error: function (xhr) {
