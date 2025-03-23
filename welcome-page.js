@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'https://www.thedailydrip.com/test',
         'https://www.thedailydrip.com/membership/community-member',
         'https://www.thedailydrip.com/membership/thought-leader',
-        'https://www.thedailydrip.com/membership/reset-password'
+        'https://www.thedailydrip.com/reset-password'
   
     ];
     
