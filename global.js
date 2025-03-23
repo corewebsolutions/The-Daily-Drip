@@ -124,9 +124,12 @@ document.addEventListener('DOMContentLoaded', function() {
     localStorage.getItem("status") !== "active")
 
     {   /*-- Gated Box Func --*/
-        const visibleAlertText = $(".alert:visible").text().trim(); // get alert text
-        $(".alert-gated-box-text").text(visibleAlertText).show(); // populate in the boc
+        const $visibleAlert = $(".alert:visible").clone(true); // true = deep clone with events
+        $(".alert-gated-box-text").html($visibleAlert.html()).show();
         $('.alert-gated-box-text').show(); // SHOW GATED BOX TEXT
+        /* --- Gated Box Func ---*/
+
+
         $('[data-content="all-members"]').show(); // VISIBLE
         $('[data-content="free-members-upgrade"]').show(); //VISIBLE
         $('[data-content="premium-member"]').remove();
