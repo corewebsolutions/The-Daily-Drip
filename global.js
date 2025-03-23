@@ -107,10 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (
         localStorage.getItem("authToken") &&
         localStorage.getItem("memberType") !== "Subscriber" &&
-        localStorage.getItem("status") !== "canceled" &&
-        localStorage.getItem("status") !== "past_due" &&
-        localStorage.getItem("status") !== "unpaid" &&
-        localStorage.getItem("status") !== "pending" &&
+        localStorage.getItem("status") === "active"
         
 
     ) {
