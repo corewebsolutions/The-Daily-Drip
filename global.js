@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.getItem("status") !== "past_due" &&
         localStorage.getItem("status") !== "unpaid" &&
         localStorage.getItem("status") !== "pending" &&
-        localStorage.getItem("status") === "active"
+        
 
     ) {
         $('[data-content="premium-member"]').show(); // VISIBLE
