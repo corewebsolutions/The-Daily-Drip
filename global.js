@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Premium Member Pending
     if (localStorage.getItem("authToken") && 
     localStorage.getItem("memberType") !== "Subscriber" && 
-    localStorage.getItem("status") !== "active")
+    localStorage.getItem("status") === "pending")
 
     {   /*-- Gated Box Func --*/
          // Clone the visible alert
