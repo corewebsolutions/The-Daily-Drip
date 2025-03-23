@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    
   const memberType = localStorage.getItem('memberType');
 
   // Show extra fields if Thought Leader
