@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+       // Initial call to populate form
+       fetchUserData();
     
     const memberType = localStorage.getItem('memberType');
 
@@ -105,7 +108,5 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   
-    // Initial call to populate form
-    fetchUserData();
 
 });
