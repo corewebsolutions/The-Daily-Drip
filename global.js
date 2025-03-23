@@ -23,20 +23,20 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#my-account-link').show(); //show my account link
         $('#alert-passwords').hide(); // remove membership update notification
         $('#subscriber-link').hide(); // remove membership update notification
+        $('#update-info').show(); //show update 
 
 
         const membership = localStorage.getItem("memberType");
         if (membership === "Subscriber") {
             $('#my-account-link').remove();
         }
-
-        
-        
+      
 
     } else { //if logged out
         $('.login-trigger').show(); //show login button
         $('#logout-link').hide(); //hide logout button
         $('#my-account-link').hide(); //hide my account link
+        $('#update-info').remove(); //show update 
     }
 
     // check user's subscription status
