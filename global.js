@@ -123,7 +123,9 @@ document.addEventListener('DOMContentLoaded', function() {
     localStorage.getItem("memberType") !== "Subscriber" && 
     localStorage.getItem("status") !== "active")
 
-    {
+    {   /*-- Gated Box Func --*/
+        const visibleAlertText = $(".alert:visible").text().trim(); // get alert text
+        $(".alert-gated-box-text").text(visibleAlertText).show(); // populate in the boc
         $('.alert-gated-box-text').show(); // SHOW GATED BOX TEXT
         $('[data-content="all-members"]').show(); // VISIBLE
         $('[data-content="free-members-upgrade"]').show(); //VISIBLE
