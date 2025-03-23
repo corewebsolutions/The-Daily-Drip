@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#alert-passwords').hide(); // remove membership update notification
         $('#subscriber-link').hide(); // remove membership update notification
         $('#update-info').show(); //show update 
+        $('[data-user="logged-in"]').hide(); // VISIBLE
 
 
         const membership = localStorage.getItem("memberType");
