@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (localStorage.authToken == null) {
     //run code if they are not logged in
     alert("You must be logged in to access this page.");
-    window.location.href = "/login";
+    window.location.href = "/account-login";
   } 
 
   populateForm();
