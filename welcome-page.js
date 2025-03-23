@@ -1,33 +1,44 @@
 document.addEventListener('DOMContentLoaded', function() {
+
     // Get the last visited URL from localStorage
-    let redirectUrl = localStorage.getItem('lastVisitedUrl');
-    
-    // Set default URL if none exists
-    if (!redirectUrl) {
-        redirectUrl = 'https://www.thedailydrip.com/';
-    }
-    
-    // Check if the URL is one of the subscription pages
-    const subscriptionPages = [
-        'https://www.thedailydrip.com/test',
-        'https://www.thedailydrip.com/membership/community-member',
-        'https://www.thedailydrip.com/membership/thought-leader',
-        'https://www.thedailydrip.com/reset-password'
-  
-    ];
-    
-    if (subscriptionPages.includes(redirectUrl)) {
-        // Redirect to home page instead
-        redirectUrl = 'https://www.thedailydrip.com/';
-    }
-    
-    // First fetch user data, then handle the redirect
-    fetchUserData(function() {
-        // Start countdown only after user data is refreshed
-        startRedirectCountdown(redirectUrl);
-    });
+  let redirectUrl = localStorage.getItem('lastVisitedUrl');
+
+  // Set default URL if none exists
+  if (!redirectUrl) {
+    redirectUrl = 'https://www.thedailydrip.com/';
+  }
+
+  // Extract pathname for partial checks
+  const redirectPath = new URL(redirectUrl).pathname;
+
+  // Exact match pages to block
+  const exactBlockedUrls = [
+    'https://www.thedailydrip.com/test',
+    'https://www.thedailydrip.com/membership/community-member',
+    'https://www.thedailydrip.com/membership/thought-leader'
+  ];
+
+  // Path-based blocked pages (query params allowed)
+  const blockedPaths = [
+    '/reset-password',
+    '/update-password'
+  ];
+
+  // Check both conditions
+  if (
+    exactBlockedUrls.includes(redirectUrl) ||
+    blockedPaths.includes(redirectPath)
+  ) {
+    redirectUrl = 'https://www.thedailydrip.com/';
+  }
+
+  // Now proceed with fetch + redirect
+  fetchUserData(function () {
+    startRedirectCountdown(redirectUrl);
   });
   
+});
+
   // Modified fetchUserData function with callback
   function fetchUserData(callback) {
     $.ajax({
