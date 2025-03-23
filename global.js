@@ -103,65 +103,46 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Gated content check
 
-    // Premium Member
-    if (
-        localStorage.getItem("authToken") &&
-        localStorage.getItem("memberType") !== "Subscriber" &&
-        localStorage.getItem("status") !== "canceled" &&
-        localStorage.getItem("status") !== "pending"
-
-    ) {
-        $('[data-content="premium-member"]').show(); // VISIBLE
-        $('[data-content="all-members"]').show(); // VISIBLE
-        $('[data-content="free-members-upgrade"]').remove();
-        $('[data-content="non-members-upgrade"]').remove();
-        $('[data-content="public"]').remove();
+    const authToken = localStorage.getItem("authToken");
+    const memberType = localStorage.getItem("memberType")?.trim();
+    const status = localStorage.getItem("status")?.trim();
+  
+    if (!authToken) {
+      // Public/non-members
+      $('[data-content="public"]').show();
+      $('[data-content="non-members-upgrade"]').show();
+      $('[data-content="all-members"]').remove();
+      $('[data-content="premium-member"]').remove();
+      $('[data-content="free-members-upgrade"]').remove();
+  
+    } else if (memberType === "Subscriber") {
+      // Free Member (Subscriber only)
+      $('[data-content="all-members"]').show();
+      $('[data-content="free-members-upgrade"]').show();
+      $('[data-content="premium-member"]').remove();
+      $('[data-content="public"]').remove();
+      $('[data-content="non-members-upgrade"]').remove();
+  
+    } else if (status === "active") {
+      // Premium Member (NOT a Subscriber + active status)
+      $('[data-content="premium-member"]').show();
+      $('[data-content="all-members"]').show();
+      $('[data-content="free-members-upgrade"]').remove();
+      $('[data-content="non-members-upgrade"]').remove();
+      $('[data-content="public"]').remove();
+  
+    } else {
+      // Premium Member Pending (NOT a Subscriber + NOT active)
+      const $visibleAlert = $(".alert:visible").clone(true);
+      $(".alert-gated-box-text").html($visibleAlert.html()).show();
+  
+      $('[data-content="all-members"]').show();
+      $('[data-content="free-members-upgrade"]').show();
+      $('[data-content="premium-member"]').remove();
+      $('[data-content="public"]').remove();
+      $('[data-content="non-members-upgrade"]').remove();
     }
 
-    // Premium Member Pending
-    if (localStorage.getItem("authToken") && 
-    localStorage.getItem("memberType") !== "Subscriber" && 
-    localStorage.getItem("status") !== "active")
-
-    {   /*-- Gated Box Func --*/
-        const $visibleAlert = $(".alert:visible").clone(true); // true = deep clone with events
-        $(".alert-gated-box-text").html($visibleAlert.html()).show();
-        $('.alert-gated-box-text').show(); // SHOW GATED BOX TEXT
-        /* --- Gated Box Func ---*/
-
-
-        $('[data-content="all-members"]').show(); // VISIBLE
-        $('[data-content="free-members-upgrade"]').show(); //VISIBLE
-        $('[data-content="premium-member"]').remove();
-        $('[data-content="public"]').remove();
-        $('[data-content="non-members-upgrade"]').remove();
-    }
-
- 
-    // Free Member (Subscriber)
-    if (localStorage.getItem("authToken") && 
-    localStorage.getItem("memberType") === "Subscriber" || 
-    localStorage.getItem("status") === "canceled")
-
-    {
-        $('[data-content="all-members"]').show(); // VISIBLE
-        $('[data-content="free-members-upgrade"]').show(); // VISIBLE
-        $('[data-content="premium-member"]').remove();
-        $('[data-content="public"]').remove();
-        $('[data-content="non-members-upgrade"]').remove();
-    } 
-
-    // Public/non-members
-    if (!localStorage.getItem("authToken")) {
-
-        // No authToken exists - user is NOT logged in
-        $('[data-content="public"]').show(); // VISIBLE
-        $('[data-content="non-members-upgrade"]').show(); // VISIBLE
-        $('[data-content="all-members"]').remove();
-        $('[data-content="premium-member"]').remove();
-        $('[data-content="free-members-upgrade"]').remove();
-        
-    }
 
 
 });
