@@ -151,10 +151,11 @@ document.addEventListener('DOMContentLoaded', function() {
       
         // Optional: Copy all span attributes to the button (except ID)
         $.each($span[0].attributes, function (_, attr) {
-          if (attr.name !== "id") {
-            $button.attr(attr.name, attr.value);
-          }
-        });
+            const attrName = attr.name;
+            if (attrName !== "id" && attrName !== "class" && attrName !== "style") {
+              $button.attr(attrName, attr.value);
+            }
+          });
       }
       
       $('[data-content="all-members"]').show();
