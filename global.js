@@ -163,6 +163,6 @@ document.addEventListener('DOMContentLoaded', function() {
       $('[data-content="public"]').remove();
       $('[data-content="non-members-upgrade"]').remove();
 
-
+    }
 
 });
