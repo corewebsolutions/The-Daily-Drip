@@ -67,10 +67,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // resume payment functionality 
-    $('#resume-payment').off("click");
+    $('[stripe="resume-payment"]').off("click");
   
     // Listen for clicks on any element with stripe="account" attribute
-    $('#resume-payment').on("click", function() {
+    $('[stripe="resume-payment"]').on("click", function() {
       // Store reference to the clicked element
       const clickedButton = $(this);
       
