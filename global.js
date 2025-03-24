@@ -132,33 +132,43 @@ document.addEventListener('DOMContentLoaded', function() {
       $('[data-content="public"]').remove();
   
     } else {
-      // Premium Member Pending (NOT a Subscriber + NOT active)
-      const $visibleAlert = $(".alert:visible").clone(true);
-      $(".alert-gated-box-text").html($visibleAlert.html()).show();
-      
-      // Grab the interactive <span> (e.g., with class 'update-account')
-      const $span = $visibleAlert.find("span.update-account");
-      
-      if ($span.length) {
-        const buttonText = $span.text().trim();
-        const hrefValue = $span.attr("href") || $span.attr("data-link") || $span.attr("data-url") || "#";
-      
-        const $button = $(".sign-up-blog-button-wrapper a");
-        $button.text(buttonText);
-        $button.attr("href", "javascript:void(0);");
-      
-        // ✅ New: find the cloned span inside gated box
-        const $clonedSpan = $(".alert-gated-box-text span.update-account");
-      
-        // Copy attributes to both button AND cloned span
-        $.each($span[0].attributes, function (_, attr) {
-          const attrName = attr.name;
-          if (!["id", "class", "style"].includes(attrName)) {
-            $button.attr(attrName, attr.value);
-            $clonedSpan.attr(attrName, attr.value);
-          }
-        });
-      }
+     // Premium Member Pending (NOT a Subscriber + NOT active)
+    const $visibleAlert = $(".alert:visible").clone(true);
+    $(".alert-gated-box-text").html($visibleAlert.html()).show();
+
+    // Grab the original span (from visible alert)
+    const $span = $(".alert:visible").find("span.update-account");
+
+    if ($span.length) {
+    const buttonText = $span.text().trim();
+    const hrefValue = $span.attr("href") || $span.attr("data-link") || $span.attr("data-url") || "#";
+
+    // Update the gated box button
+    const $button = $(".sign-up-blog-button-wrapper a");
+    $button.text(buttonText);
+    $button.attr("href", "javascript:void(0);");
+
+    // Find the cloned span inside gated box
+    const $clonedSpan = $(".alert-gated-box-text span.update-account");
+
+    // Copy attributes from original span to both cloned span and button
+    $.each($span[0].attributes, function (_, attr) {
+        const attrName = attr.name;
+        if (!["id", "class", "style"].includes(attrName)) {
+        $clonedSpan.attr(attrName, attr.value);
+        $button.attr(attrName, attr.value);
+        }
+    });
+
+    // ✅ Bind click on cloned span and button to trigger original span's click
+    $clonedSpan.on("click", function () {
+        $span.trigger("click");
+    });
+
+    $button.on("click", function () {
+        $span.trigger("click");
+    });
+    }
       
       $('[data-content="all-members"]').show();
       $('[data-content="free-members-upgrade"]').show();
