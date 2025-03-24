@@ -9,6 +9,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
   populateForm();
 
+  /* ---- URL Validation for Form (required for webflow) ---*/
+  const form = document.getElementById("thought-leader-signup");
+
+  const validExtensions = ['.com', '.org', '.net', '.co', '.io', '.edu', '.gov', '.biz', '.info'];
+
+  function hasValidExtension(url) {
+    return validExtensions.some(ext => url.toLowerCase().includes(ext));
+  }
+
+  function normalizeUrl(url) {
+    if (!url) return "";
+
+    url = url.trim().replace(/\s+/g, "");
+
+    if (/^https?:\/\//i.test(url) && hasValidExtension(url)) return url;
+    if (/^www\./i.test(url) && hasValidExtension(url)) return `https://${url}`;
+    if (/^[\w.-]+\.[a-z]{2,}/i.test(url) && hasValidExtension(url)) return `https://www.${url}`;
+
+    return "";
+  }
+
+  form.addEventListener("submit", function () {
+    const urlInputs = form.querySelectorAll('input[data-element="url"]');
+    urlInputs.forEach(input => {
+      const cleaned = normalizeUrl(input.value);
+      input.value = cleaned;
+    });
+  });
+
 
   $("#thought-leader-signup").submit(function(e) {
       e.preventDefault(); // Prevent default form submission
