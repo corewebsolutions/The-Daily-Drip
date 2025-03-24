@@ -141,21 +141,23 @@ document.addEventListener('DOMContentLoaded', function() {
       
       if ($span.length) {
         const buttonText = $span.text().trim();
-      
-        // Try common link attributes in order of preference
         const hrefValue = $span.attr("href") || $span.attr("data-link") || $span.attr("data-url") || "#";
       
         const $button = $(".sign-up-blog-button-wrapper a");
         $button.text(buttonText);
         $button.attr("href", "javascript:void(0);");
       
-        // Optional: Copy all span attributes to the button (except ID)
+        // ✅ New: find the cloned span inside gated box
+        const $clonedSpan = $(".alert-gated-box-text span.update-account");
+      
+        // Copy attributes to both button AND cloned span
         $.each($span[0].attributes, function (_, attr) {
-            const attrName = attr.name;
-            if (attrName !== "id" && attrName !== "class" && attrName !== "style") {
-              $button.attr(attrName, attr.value);
-            }
-          });
+          const attrName = attr.name;
+          if (!["id", "class", "style"].includes(attrName)) {
+            $button.attr(attrName, attr.value);
+            $clonedSpan.attr(attrName, attr.value);
+          }
+        });
       }
       
       $('[data-content="all-members"]').show();
