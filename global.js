@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
       $('[data-content="public"]').remove();
   
     } else {
-     // Premium Member Pending (NOT a Subscriber + NOT active)
+    // Premium Member Pending (NOT a Subscriber + NOT active)
     const $visibleAlert = $(".alert:visible").clone(true);
     $(".alert-gated-box-text").html($visibleAlert.html()).show();
 
@@ -143,15 +143,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const buttonText = $span.text().trim();
     const hrefValue = $span.attr("href") || $span.attr("data-link") || $span.attr("data-url") || "#";
 
-    // Update the gated box button
     const $button = $(".sign-up-blog-button-wrapper a");
     $button.text(buttonText);
     $button.attr("href", "javascript:void(0);");
 
-    // Find the cloned span inside gated box
     const $clonedSpan = $(".alert-gated-box-text span.update-account");
 
-    // Copy attributes from original span to both cloned span and button
     $.each($span[0].attributes, function (_, attr) {
         const attrName = attr.name;
         if (!["id", "class", "style"].includes(attrName)) {
@@ -160,14 +157,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // ✅ Bind click on cloned span and button to trigger original span's click
-    $clonedSpan.on("click", function () {
+    // ✅ Add click handling + feedback
+    const handleClick = () => {
+        $clonedSpan.text("Please Wait...");
+        $button.text("Please Wait...");
         $span.trigger("click");
-    });
+    };
 
-    $button.on("click", function () {
-        $span.trigger("click");
-    });
+    $clonedSpan.on("click", handleClick);
+    $button.on("click", handleClick);
     }
       
       $('[data-content="all-members"]').show();
