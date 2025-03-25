@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+    ajaxErrorsWorkflow(); // error handling
+
     //logout func
     $('#logout-link').click(function(e) {
 
