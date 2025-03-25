@@ -177,3 +177,78 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
+function ajaxErrorsWorkflow() {
+
+  /* Global Ajax Errors Handling */
+  $(document).ajaxError(function(event, jqXHR, settings, thrownError) {
+    // Retrieve the error code and response text
+    var errorCode = jqXHR.status;
+    var errorMessage = jqXHR.responseText;
+
+    console.log("AJAX Error Detected:");
+    console.log("Error Code: " + errorCode);
+    console.log("Error Message: " + errorMessage);
+
+    // Try to parse the responseText to JSON if the API response is JSON
+    try {
+        var responseJson = JSON.parse(jqXHR.responseText);
+        errorMessage = responseJson.message || responseJson.error || errorMessage;
+    } catch (e) {
+        // responseText wasn't JSON, use the raw responseText
+    }
+
+    console.log("Parsed Error Message: " + errorMessage);
+
+
+    // Check if the error is a 401 Unauthorized or 500 with the specific message
+    if ((errorCode === 401 && (errorMessage.includes("This token is expired.") || errorMessage.includes("Invalid token"))) || 
+        (errorCode === 500 && errorMessage.includes("Unable to locate auth: extras.user_id"))) {
+        alert('Session Expired');
+        //logout func ----------
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("memberType");
+        localStorage.removeItem("status");
+        localStorage.removeItem("firstName");
+        localStorage.removeItem("lastName");
+        localStorage.removeItem("email");
+        window.location.href = "/"
+        //-------------------------
+      
+    } else if (errorMessage.includes("Unable to locate auth: extras.user_id")) {
+        alert('Unable to locate auth: extras.user_id');
+        //logout func ----------
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("memberType");
+        localStorage.removeItem("status");
+        localStorage.removeItem("firstName");
+        localStorage.removeItem("lastName");
+        localStorage.removeItem("email");
+        window.location.href = "/"
+        //-------------------------
+    } else {
+        alert("Error " + errorCode + ": " + errorMessage);
+        // Prepare the error data as a single JSON object
+        var errorData = JSON.stringify({
+          endpoint: settings.url,
+          error_code: errorCode,
+          error_message: errorMessage,
+          user: localStorage.lastName
+      });
+
+      // Send the error data to your server
+      $.ajax({
+          type: "POST",
+          url: "https://xxdy-xbul-g3ez.n7d.xano.io/api:7LoWKczE/record_errors",
+          contentType: "application/json",
+          data: errorData, // Send the stringified JSON object
+          success: function(response) {
+              console.log("Error logged successfully");
+          },
+          error: function(response) {
+              console.log("Failed to log error");
+          }
+      });
+    }
+  });
+}
