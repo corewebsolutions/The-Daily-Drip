@@ -57,7 +57,8 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         error: function (xhr) {
           console.error('Error fetching user data:', xhr.responseText);
-          alert('Could not load your profile.');
+          alert('Session Expired, Please Login Again.');
+          window.location.href = "/account-login";
         }
       });
     }
