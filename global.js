@@ -16,6 +16,20 @@ document.addEventListener('DOMContentLoaded', function() {
         
     });
 
+    // password-reset alert seen
+    $('[password-alert="closed"]').on("click", function() {
+      localStorage.setItem("passResetMessage","seen")
+    });
+
+    if (localStorage.passResetMessage) {
+      $('.email-reset-alert').hide();
+    } else {
+      setTimeout(function() {
+        $('.email-reset-alert').show();
+      }, 2000); // Delay in milliseconds (2000ms = 2s)
+    }
+
+
     // login/logout button dynamic bvisibility
 
     //if logged in...
