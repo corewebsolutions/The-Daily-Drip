@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
       $('.email-reset-alert').hide();
     } else {
       setTimeout(function() {
-        $('.email-reset-alert').show();
+        $('.email-reset-alert').css("display","flex");
       }, 2000); // Delay in milliseconds (2000ms = 2s)
     }
 
