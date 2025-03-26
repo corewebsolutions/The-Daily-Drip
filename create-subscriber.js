@@ -1,149 +1,152 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Track current slide for back button visibility
-    let currentSlide = 1;
-    
-    // Handle slide navigation
-    function updateBackButtonVisibility() {
-        const backButton = document.getElementById('go-back');
-        if (currentSlide > 1) {
-            // Show back button when not on first slide
-            backButton.style.opacity = "1";
-            backButton.style.pointerEvents = "auto";
-        } else {
-            // Hide back button on first slide
-            backButton.style.opacity = "0";
-            backButton.style.pointerEvents = "none";
-        }
+// Custom Multi-Step Form with Validation using jQuery
+    const $form = $('#sign-up-form');
+    const $slides = $form.find('.w-slide');
+    const $backButton = $('#go-back');
+    const $nextButton = $('#next-button');
+    const $submitButton = $('.submit-button');
+    const $alertBox = $('#alert');
+  
+    let currentSlide = 0;
+  
+    function showSlide(index) {
+      $slides.each(function (i) {
+        const $slide = $(this);
+        $slide.attr('aria-hidden', i !== index);
+        $slide.css('display', i === index ? 'block' : 'none');
+      });
+      $('#current-slide').text(index + 1);
+      $backButton.css({
+        opacity: index > 0 ? '1' : '0',
+        pointerEvents: index > 0 ? 'auto' : 'none',
+      });
+  
+      $submitButton.css('display', index === $slides.length - 1 ? 'inline-block' : 'none');
+      $nextButton.css('display', index === $slides.length - 1 ? 'none' : 'inline-block');
     }
-    
-    // Watch for slide changes
-    const sliderDots = document.querySelectorAll('.w-slider-dot');
-    sliderDots.forEach((dot, index) => {
-        dot.addEventListener('click', function() {
-            currentSlide = index + 1;
-            document.getElementById('current-slide').textContent = currentSlide;
-            updateBackButtonVisibility();
-        });
-    });
-    
-    // Handle next button click (advances slide)
-    document.getElementById('next-button').addEventListener('click', function(e) {
-        e.preventDefault();
-        if (currentSlide < sliderDots.length) {
-            currentSlide++;
-            document.getElementById('current-slide').textContent = currentSlide;
-            sliderDots[currentSlide - 1].click(); // Click the appropriate dot
-            updateBackButtonVisibility();
+  
+    function validateCurrentSlide() {
+      const $current = $slides.eq(currentSlide);
+      const $requiredFields = $current.find('input[required], select[required], textarea[required]');
+      let isValid = true;
+  
+      $requiredFields.each(function () {
+        const $field = $(this);
+        const value = $field.attr('type') === 'checkbox' ? $field.prop('checked') : $field.val().trim();
+        if (!value) {
+          $field.addClass('warning');
+          isValid = false;
+        } else {
+          $field.removeClass('warning');
         }
+      });
+  
+      if (!isValid) {
+        $alertBox.text('Please complete all required fields on this step.').css({ opacity: '1', pointerEvents: 'auto' });
+      } else {
+        $alertBox.css({ opacity: '0', pointerEvents: 'none' });
+      }
+  
+      return isValid;
+    }
+  
+    $nextButton.on('click', function (e) {
+      e.preventDefault();
+      if (validateCurrentSlide()) {
+        currentSlide++;
+        showSlide(currentSlide);
+      }
     });
-    
-    // Handle back button click
-    document.getElementById('go-back').addEventListener('click', function() {
-        if (currentSlide > 1) {
-            currentSlide--;
-            document.getElementById('current-slide').textContent = currentSlide;
-            sliderDots[currentSlide - 1].click(); // Click the appropriate dot
-            updateBackButtonVisibility();
-        }
+  
+    $backButton.on('click', function () {
+      if (currentSlide > 0) {
+        currentSlide--;
+        showSlide(currentSlide);
+      }
     });
-    
-    // Handle form submission
-    $("#sign-up-form").submit(function(e) {
-        e.preventDefault(); // Prevent default form submission
-        
-        // Show loading state without making button disappear
-        const submitButton = $(".submit-button");
-        const originalButtonText = submitButton.val() || submitButton.text() || "Join Our Community";
-        
-        // Keep button visible but show processing state
-        submitButton.val("Processing...").text("Processing...");
-        submitButton.prop('disabled', true);
-        submitButton.css({
-            'opacity': '0.8',  // Keep it visible but slightly faded
-            'cursor': 'wait'
-        });
-        
-        // Check if non-US option is selected
-        const isNonUS = $("#check-for-usa").is(":checked");
-        
-        // Collect form data
-        const formData = {
-            first_name: $("#first-name-2").val(),
-            last_name: $("#last-name-2").val(),
-            company_name: $("#company-name").val(),
-            industry: $("#industry").val(),
-            self_employed: $("#self-employed").val(),
-            years_practicing: $("#years-practicing").val(),
-            email: $("#email-3").val(),
-            password: $("#password-signup").val(),
-            
-            // Handle city/state based on US or non-US
-            city: isNonUS ? $("#city-global").val() : $("#city").val(),
-            state: isNonUS ? $("#country-global").val() : $("#state").val()
-        };
-        
-        
-        // Send data to create subscriber API endpoint
-        $.ajax({
-            url: "https://xxdy-xbul-g3ez.n7d.xano.io/api:RjbKSLFK/create_subscriber",
-            type: "POST",
-            data: JSON.stringify(formData),
-            contentType: "application/json",
-            success: function(response) {
-                // Store auth token and user info if provided in response
-                if (response.authToken) {
-                    localStorage.setItem("authToken", response.authToken);
-                }
-                
-                if (response.user_info) {
-                    localStorage.setItem("memberType", "Subscriber");
-                    localStorage.setItem("status", "active");
-                    localStorage.setItem("firstName", response.user_info.first_name || formData.first_name);
-                    localStorage.setItem("lastName", response.user_info.last_name || formData.last_name);
-                    localStorage.setItem("email", response.user_info.email || formData.email);
-                }
-                
-                // Keep the button visible but change text to "Success!"
-                submitButton.val("Success!").text("Success!");
-                submitButton.css({
-                    'opacity': '1',
-                    'background-color': '#4CAF50' // Green for success
-                });
+  
+    $form.on('submit', function (e) {
+      e.preventDefault();
+  
+      if (!validateCurrentSlide()) return;
+  
+      const originalButtonText = $submitButton.val() || $submitButton.text();
+      $submitButton.val('Processing...').text('Processing...').prop('disabled', true).css({
+        opacity: '0.8',
+        cursor: 'wait',
+      });
+  
+      const isNonUS = $('#check-for-usa').is(':checked');
+      const formData = {
+        first_name: $('#first-name-2').val(),
+        last_name: $('#last-name-2').val(),
+        company_name: $('#company-name').val(),
+        industry: $('#industry').val(),
+        self_employed: $('#self-employed').val(),
+        years_practicing: $('#years-practicing').val(),
+        email: $('#email-3').val(),
+        password: $('#password-signup').val(),
+        city: isNonUS ? $('#city-global').val() : $('#city').val(),
+        state: isNonUS ? $('#country-global').val() : $('#state').val(),
+      };
+  
+      $.ajax({
+        url: 'https://xxdy-xbul-g3ez.n7d.xano.io/api:RjbKSLFK/create_subscriber',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(formData),
+        success: function (response) {
+          if (response.authToken) {
+            localStorage.setItem('authToken', response.authToken);
+          }
+          if (response.user_info) {
+            localStorage.setItem('memberType', 'Subscriber');
+            localStorage.setItem('status', 'active');
+            localStorage.setItem('firstName', response.user_info.first_name || formData.first_name);
+            localStorage.setItem('lastName', response.user_info.last_name || formData.last_name);
+            localStorage.setItem('email', response.user_info.email || formData.email);
+          }
+  
+          $submitButton.val('Success!').text('Success!').css({
+            opacity: '1',
+            backgroundColor: '#4CAF50',
+          });
+  
+          window.location.href = '/sign-up-confirmation';
+        },
+        error: function (xhr) {
+          console.error(xhr.responseText);
+          let errorMessage = 'There was an error creating your account. Please try again.';
+  
+          // Try to parse the error message from response
+          try {
+            const res = JSON.parse(xhr.responseText);
+            if (res.message) errorMessage = res.message;
+          } catch (err) {
+            // leave default
+          }
+  
+          $alertBox.text(errorMessage).css({
+            opacity: '1',
+            pointerEvents: 'auto',
+          });
+  
+          $submitButton.val(originalButtonText).text(originalButtonText).prop('disabled', false).css({
+            opacity: '1',
+            cursor: 'pointer',
+            backgroundColor: '',
+          });
+        },
+      });
+    });
+  
+    // Initialize
+    showSlide(currentSlide);
+  
+    // Populate dynamic industries from CMS items
+    $('.select-option').each(function () {
+      var selectField = $(this).text();
+      $('.select-field').append('<option value="' + selectField + '">' + selectField + '</option>');
+    });
 
-                window.location.href = "/sign-up-confirmation";
-
-            },
-            error: function(xhr, status, error) {
-                // Cancel the redirect timeout
-                clearTimeout(redirectTimeout);
-                
-                // Show error message
-                console.error("Error:", error);
-                console.error("Response:", xhr.responseText);
-                
-                // Display error to user
-                $("#alert").text("There was an error creating your account. Please try again.").css({
-                    "opacity": "1",
-                    "pointer-events": "auto"
-                });
-                
-                // Reset button without disappearing
-                submitButton.val(originalButtonText).text(originalButtonText);
-                submitButton.prop('disabled', false);
-                submitButton.css({
-                    'opacity': '1',
-                    'cursor': 'pointer',
-                    'background-color': '' // Reset to default
-                });
-            }
-        });
-    });
-    
-    // Also handle the final "Create Account" button click
-    $("input.next-button.fall-back").click(function() {
-        $("#sign-up-form").submit();
-    });
-    
-    // Initialize back button visibility
-    updateBackButtonVisibility();
 });
