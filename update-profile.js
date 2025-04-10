@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const memberType = localStorage.getItem("memberType");
 
-    if (memberType !== "Thought Leader") {
+    if (memberType !== "Thought Leader" && memberType !== "Thought Leader (Legacy)") {
       $('#Linkedin-2').closest('.form__item').remove();
       $('#Twitter-2').closest('.form__item').remove();
       $('#Instagram-2').closest('.form__item').remove();
