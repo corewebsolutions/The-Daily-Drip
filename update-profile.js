@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
       $('#Twitter-2').val(user.twitter);
       $('#Instagram-2').val(user.instagram);
       $('#Facebook-2').val(user.facebook);
-      $('#field-2').val(user.profile_image);
+      //$('#field-2').val(user.profile_image);
       $('#Bio-2').val(user.bio);
       $('#birthday').val(user.birthday);
       $('#phone-2').val(user.phone_number);
