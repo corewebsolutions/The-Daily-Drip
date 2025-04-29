@@ -67,11 +67,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     $('#update_profile-form').on('submit', function (e) {
       e.preventDefault();
-
+    
+      // Normalize only specific URL fields
+      const fieldsToNormalize = ['#Linkedin-2', '#Twitter-2', '#Instagram-2', '#Facebook-2', '#Website-2'];
+    
+      fieldsToNormalize.forEach(selector => {
+        const input = $(selector);
+        const cleaned = normalizeUrl(input.val());
+        input.val(cleaned);
+      });
+    
       const $submitBtn = $(this).find('input[type="submit"]');
       const originalText = $submitBtn.val();
       $submitBtn.val('Updating...').prop('disabled', true);
-
+    
       const formData = {
         first_name: $('#First-Name-2').val(),
         last_name: $('#Last-Name-2').val(),
@@ -98,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
         website: $('#Website-2').val(),
         member_type: memberType
       };
-
+    
       $.ajax({
         url: 'https://xxdy-xbul-g3ez.n7d.xano.io/api:RjbKSLFK/update_profile',
         method: 'POST',
@@ -119,4 +128,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
     });
+
 });
