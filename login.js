@@ -26,6 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
         $.ajax({
             url: "https://xxdy-xbul-g3ez.n7d.xano.io/api:QpSbC3Ej/auth/login",
             type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(formData), 
             data: formData,
             success: function (response) {
                 /* Set Local Storage Data */
