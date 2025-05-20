@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // login page 
-$("#account-login-form").submit(function (event) {
+$("#account-login-form").submit(function (event) {  
     // Prevent the default form submission behavior
     event.preventDefault();
 
