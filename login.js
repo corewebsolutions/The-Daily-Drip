@@ -76,8 +76,8 @@ $("#account-login-form").submit(function (event) {
 
     // Get values directly from the specific form fields
     const formData = {
-        email: $("#login-email").val(),
-        password: $("#login-password").val()
+        email: $("#login-page-email").val(),
+        password: $("#login-page-password").val()
     };
 
     // Make a login AJAX POST request
