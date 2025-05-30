@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const exactBlockedUrls = [
     'https://www.thedailydrip.com/test',
     'https://www.thedailydrip.com/membership/community-member',
-    'https://www.thedailydrip.com/membership/thought-leader'
+    'https://www.thedailydrip.com/membership/thought-leader',
+    'https://www.thedailydrip.com/subscribe'
   ];
 
   // Path-based blocked pages (query params allowed)
