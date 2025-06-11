@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(formData), 
-            data: formData,
             success: function (response) {
                 /* Set Local Storage Data */
                 localStorage.setItem("authToken", response.authToken);
