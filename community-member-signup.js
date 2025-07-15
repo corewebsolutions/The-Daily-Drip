@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
       years_practicing: $("#Years-Practicing-2").val(),
       city: $("#City-2").val(),
       state: $("#State-2").val(),
+      phone_number: $("#phone-number").val(),
       email: isSignedIn ? localStorage.getItem("email") : $("#Email-2").val()
     };
 
