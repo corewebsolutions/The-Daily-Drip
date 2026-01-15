@@ -1,0 +1,12 @@
+{
+  "instanceName": "xukl-cktx-zcsb",
+  "workspaceName": "Real Estate",
+  "workspaceId": 2,
+  "branch": "v1",
+  "paths": {
+    "functions": "functions",
+    "tables": "tables",
+    "apis": "apis",
+    "tasks": "tasks"
+  }
+}

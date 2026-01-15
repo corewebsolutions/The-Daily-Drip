@@ -20,29 +20,30 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function populateFormFields(user) {
-    $('#First-Name-2').val(user.first_name);
-    $('#Last-Name-2').val(user.last_name);
-    $('#Company-Name-2').val(user.company_name);
-    $('#job-title-2').val(user.job_title);
-    $('#Industry-2').val(user.industry);
-    $('#Self-Employed-2').val(user.self_employed);
-    $('#Years-Practicing-2').val(user.years_practicing);
-    $('#City-2').val(user.city);
-    $('#State-2').val(user.state);
-    $('#email').val(user.email);
-    $('#Linkedin-2').val(user.linkedin);
-    $('#Twitter-2').val(user.twitter);
-    $('#Instagram-2').val(user.instagram);
-    $('#Facebook-2').val(user.facebook);
-    //$('#field-2').val(user.profile_image);
-    $('#Bio-2').val(user.bio);
-    $('#birthday').val(user.birthday);
-    $('#phone-2').val(user.phone_number);
-    $('#mailing-street-3').val(user.street_address);
-    $('#mailing-street-2').val(user.street_address_2);
-    $('#mailing-city-2').val(user.mailing_city);
-    $('#mailing-state-2').val(user.mailing_state);
-    $('#Website-2').val(user.website);
+    $('#First-Name-2').val(user.first_name || '');
+    $('#Last-Name-2').val(user.last_name || '');
+    $('#Company-Name-2').val(user.company_name || '');
+    $('#job-title-2').val(user.job_title || '');
+    $('#Industry-2').val(user.industry || '');
+    $('#Self-Employed-2').val(user.self_employed || '');
+    $('#Years-Practicing-2').val(user.years_practicing || '');
+    $('#City-2').val(user.city || '');
+    $('#State-2').val(user.state || '');
+    $('#email').val(user.email || '');
+    
+    // Only populate if field exists
+    if ($('#Linkedin-2').length) $('#Linkedin-2').val(user.linkedin || '');
+    if ($('#Twitter-2').length) $('#Twitter-2').val(user.twitter || '');
+    if ($('#Instagram-2').length) $('#Instagram-2').val(user.instagram || '');
+    if ($('#Facebook-2').length) $('#Facebook-2').val(user.facebook || '');
+    if ($('#Bio-2').length) $('#Bio-2').val(user.bio || '');
+    if ($('#birthday').length) $('#birthday').val(user.birthday || '');
+    if ($('#phone-2').length) $('#phone-2').val(user.phone_number || '');
+    if ($('#mailing-street-3').length) $('#mailing-street-3').val(user.street_address || '');
+    if ($('#mailing-street-2').length) $('#mailing-street-2').val(user.street_address_2 || '');
+    if ($('#mailing-city-2').length) $('#mailing-city-2').val(user.mailing_city || '');
+    if ($('#mailing-state-2').length) $('#mailing-state-2').val(user.mailing_state || '');
+    if ($('#Website-2').length) $('#Website-2').val(user.website || '');
   }
 
   function fetchUserData() {
@@ -84,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
   $('#update_profile-form').on('submit', function (e) {
     e.preventDefault();
 
-    // Validate social URL fields
+    // Validate social URL fields - ONLY if they exist
     const urlFields = [
       { selector: '#Linkedin-2', label: 'LinkedIn' },
       { selector: '#Twitter-2', label: 'Twitter' },
@@ -97,23 +98,28 @@ document.addEventListener('DOMContentLoaded', function() {
     let errorMessages = [];
 
     urlFields.forEach(({ selector, label }) => {
-      const inputVal = $(selector).val().trim();
-      if (inputVal && (inputVal.startsWith('@') || !hasValidExtension(inputVal))) {
-        errorMessages.push(`${label} must be a full URL (not @username).`);
-        hasError = true;
+      const $field = $(selector);
+      if ($field.length) {  // Check if field exists before accessing it
+        const inputVal = $field.val();
+        if (inputVal && inputVal.trim() && (inputVal.startsWith('@') || !hasValidExtension(inputVal))) {
+          errorMessages.push(`${label} must be a full URL (not @username).`);
+          hasError = true;
+        }
       }
     });
 
     if (hasError) {
       alert(errorMessages.join('\n'));
-      return; // Stop the form from submitting
+      return;
     }
 
-    // Normalize the fields after validation
+    // Normalize the fields after validation - ONLY if they exist
     urlFields.forEach(({ selector }) => {
-      const input = $(selector);
-      const cleaned = normalizeUrl(input.val());
-      input.val(cleaned);
+      const $field = $(selector);
+      if ($field.length) {
+        const cleaned = normalizeUrl($field.val() || '');
+        $field.val(cleaned);
+      }
     });
 
     const $submitBtn = $(this).find('input[type="submit"]');
@@ -131,19 +137,19 @@ document.addEventListener('DOMContentLoaded', function() {
       city: $('#City-2').val(),
       state: $('#State-2').val(),
       email: $('#email').val(),
-      linkedin: $('#Linkedin-2').val(),
-      twitter: $('#Twitter-2').val(),
-      instagram: $('#Instagram-2').val(),
-      facebook: $('#Facebook-2').val(),
-      profile_image: $('#field-2').val(),
-      bio: $('#Bio-2').val(),
-      birthday: $('#birthday').val(),
-      phone_number: $('#phone-2').val(),
-      street_address: $('#mailing-street-3').val(),
-      street_address_2: $('#mailing-street-2').val(),
-      mailing_city: $('#mailing-city-2').val(),
-      mailing_state: $('#mailing-state-2').val(),
-      website: $('#Website-2').val(),
+      linkedin: $('#Linkedin-2').length ? $('#Linkedin-2').val() : null,
+      twitter: $('#Twitter-2').length ? $('#Twitter-2').val() : null,
+      instagram: $('#Instagram-2').length ? $('#Instagram-2').val() : null,
+      facebook: $('#Facebook-2').length ? $('#Facebook-2').val() : null,
+      profile_image: $('#field-2').length ? $('#field-2').val() : null,
+      bio: $('#Bio-2').length ? $('#Bio-2').val() : null,
+      birthday: $('#birthday').length ? $('#birthday').val() : null,
+      phone_number: $('#phone-2').length ? $('#phone-2').val() : null,
+      street_address: $('#mailing-street-3').length ? $('#mailing-street-3').val() : null,
+      street_address_2: $('#mailing-street-2').length ? $('#mailing-street-2').val() : null,
+      mailing_city: $('#mailing-city-2').length ? $('#mailing-city-2').val() : null,
+      mailing_state: $('#mailing-state-2').length ? $('#mailing-state-2').val() : null,
+      website: $('#Website-2').length ? $('#Website-2').val() : null,
       member_type: memberType
     };
 
