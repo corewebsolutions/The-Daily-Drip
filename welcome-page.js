@@ -1,56 +1,53 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
+
+  const HOME = window.location.origin + '/';
 
   // Get the last visited URL from localStorage
   let redirectUrl = localStorage.getItem('lastVisitedUrl');
 
   // Set default URL if none exists
   if (!redirectUrl) {
-    redirectUrl = 'https://www.thedailydrip.com/';
+    redirectUrl = HOME;
   }
 
   // Extract pathname for partial checks (safe parse)
   let redirectPath = '/';
+  let redirectObj;
+
   try {
-    redirectPath = new URL(redirectUrl).pathname;
+    redirectObj = new URL(redirectUrl);
+    redirectPath = redirectObj.pathname;
   } catch (e) {
-    redirectUrl = 'https://www.thedailydrip.com/';
+    redirectUrl = HOME;
+    redirectObj = new URL(redirectUrl);
     redirectPath = '/';
   }
 
   // ✅ Block Stripe Checkout return URLs (session_id=cs_live_... or cs_test_...)
   let isStripeReturn = false;
   try {
-    const u = new URL(redirectUrl);
-    const sid = u.searchParams.get("session_id");
+    const sid = redirectObj.searchParams.get("session_id");
     isStripeReturn =
       (sid && /^cs_(test|live)_/i.test(sid)) ||
-      u.pathname === "/sign-up-confirmation";
+      redirectObj.pathname === "/sign-up-confirmation";
   } catch (e) {
     isStripeReturn = true; // malformed URL? treat as unsafe
   }
 
-  // Exact match pages to block
-  const exactBlockedUrls = [
-    'https://www.thedailydrip.com/test',
-    'https://www.thedailydrip.com/membership/community-member',
-    'https://www.thedailydrip.com/membership/thought-leader',
-    'https://www.thedailydrip.com/subscribe'
-  ];
-
-  // Path-based blocked pages (query params allowed)
+  // ✅ Blocked pages by PATH (more reliable than full URLs)
   const blockedPaths = [
+    '/test',
+    '/subscribe',
+    '/membership/community-member',
+    '/membership/thought-leader',
     '/reset-password',
-    '/update-password'
+    '/update-password',
+    '/welcome'
   ];
 
   // Check all conditions
-  if (
-    isStripeReturn ||
-    exactBlockedUrls.includes(redirectUrl) ||
-    blockedPaths.includes(redirectPath)
-  ) {
-    redirectUrl = 'https://www.thedailydrip.com/';
-    // ✅ Optional but recommended: keep storage clean too
+  if (isStripeReturn || blockedPaths.includes(redirectPath)) {
+    redirectUrl = HOME;
     localStorage.setItem('lastVisitedUrl', redirectUrl);
   }
 
@@ -70,7 +67,7 @@ function fetchUserData(callback) {
     headers: {
       "Authorization": "Bearer " + localStorage.getItem('authToken')
     },
-    success: function(response) {
+    success: function (response) {
       /* Set Local Storage Data */
       localStorage.setItem("memberType", response.member_type);
       localStorage.setItem("status", response.status);
@@ -78,16 +75,14 @@ function fetchUserData(callback) {
       localStorage.setItem("lastName", response.last_name);
       localStorage.setItem("email", response.email);
     },
-    complete: function() {
-      // Call the callback function when AJAX is complete (whether success or error)
+    complete: function () {
       if (typeof callback === 'function') {
         callback();
       }
     },
-    error: function(xhr, status, error) {
+    error: function (xhr, status, error) {
       console.error("Error:", error);
       console.log("Continuing with redirect despite error fetching user data");
-      // Don't show alert here, as we still want to redirect
     }
   });
 }
@@ -97,7 +92,7 @@ function fetchUserData(callback) {
 function startRedirectCountdown(redirectUrl) {
   let seconds = 3;
 
-  const countdown = setInterval(function() {
+  const countdown = setInterval(function () {
     seconds--;
 
     if (seconds <= 0) {
