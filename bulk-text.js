@@ -1,7 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 
-  alert('TEST!');
 
   const $form = $("#bulk-text-form");
   const $successMessage = $(".bulk-text-success");
