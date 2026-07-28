@@ -19,7 +19,7 @@ query "reset/magic-link-login" verb=POST {
     }
   
     // Get the user record with the email from the URL
-    db.get user {
+    db.get "" {
       field_name = "email"
       field_value = $input.email
       output = [
@@ -59,14 +59,14 @@ query "reset/magic-link-login" verb=POST {
   
     // Create an authentication token
     security.create_auth_token {
-      table = "user"
+      table = ""
       extras = ""
       expiration = 86400
       id = $user.id
     } as $auth_token
   
     // Update the user record that the password reset token has been used
-    db.edit user {
+    db.edit "" {
       field_name = "id"
       field_value = $user.id
       data = {

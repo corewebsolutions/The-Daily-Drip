@@ -11,7 +11,7 @@ function "Getting Started Template/generate_magic_link" {
     }
   
     // Gets the user record by email
-    db.query user {
+    db.query "" {
       where = $db.user.email == $input.email
       return = {type: "single"}
     } as $user
@@ -36,7 +36,7 @@ function "Getting Started Template/generate_magic_link" {
     }
   
     // Updates the user record with the password reset object
-    db.edit user {
+    db.edit "" {
       field_name = "id"
       field_value = $user|get:"id":0
       data = {password_reset: $password_reset}

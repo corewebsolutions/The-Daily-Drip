@@ -1,7 +1,7 @@
 // This is the demo agent endpoint used to connect to the Xano Demo AI Agent that answers questions about Xano by referencing documentation. You can access your Xano Demo AI Agent in AI > Agents. 
 query "demo-agent/conversation" verb=POST {
   api_group = "Authentication"
-  auth = "user"
+  auth = ""
 
   input {
     // The ID of the conversation from the conversation table.
@@ -23,7 +23,7 @@ query "demo-agent/conversation" verb=POST {
     conditional {
       if ($input.conversation_id == null || $input.conversation_id == 0) {
         // Create a new conversation if one doesn't exist.
-        db.add agent_conversation {
+        db.add "" {
           data = {created_at: "now", owner_user: $auth.id}
         } as $conversation1
       
@@ -33,7 +33,7 @@ query "demo-agent/conversation" verb=POST {
         }
       
         // Save the current user message to the database
-        db.add agent_message {
+        db.add "" {
           data = {
             created_at  : "now"
             conversation: $conversation_id
@@ -50,7 +50,7 @@ query "demo-agent/conversation" verb=POST {
     
       else {
         // Save the current user message to the database
-        db.add agent_message {
+        db.add "" {
           data = {
             created_at  : "now"
             conversation: $conversation_id
@@ -60,8 +60,8 @@ query "demo-agent/conversation" verb=POST {
         } as $message1
       
         // Retrieve the existing messages within the conversation
-        db.query agent_message {
-          where = $db.agent_message.conversation == $input.conversation_id
+        db.query "" {
+          where = $db.message.conversation == $input.conversation_id
           return = {type: "list"}
           output = ["role", "content"]
         } as $all_messages
@@ -88,7 +88,7 @@ query "demo-agent/conversation" verb=POST {
     }
   
     // Add a new record to the message table
-    db.add agent_message {
+    db.add "" {
       data = {
         created_at  : "now"
         conversation: $conversation_id

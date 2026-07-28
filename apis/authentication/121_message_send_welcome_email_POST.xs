@@ -9,7 +9,7 @@ query "message/send_welcome_email" verb=POST {
 
   stack {
     // Retrieve the user record for the given user ID.
-    db.get user {
+    db.get "" {
       field_name = "id"
       field_value = $input.user_id
     } as $user_record

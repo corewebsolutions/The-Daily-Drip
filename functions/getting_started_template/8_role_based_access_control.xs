@@ -15,7 +15,7 @@ function "Getting Started Template/role-based access control" {
     }
   
     // Retrieve the user's role from the database.
-    db.get user {
+    db.get "" {
       field_name = "id"
       field_value = $input.user_id
       output = ["role"]
