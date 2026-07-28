@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $form[0].reset();
 
         // Show the custom success message
-        $successMessage.stop(true, true).css("display", "block");
+        $successMessage.stop(true, true).css("display", "flex");
 
         // Hide it again after 3 seconds
         setTimeout(function () {
