@@ -1,27 +1,89 @@
 
-document.addEventListener('DOMContentLoaded', function() {
-
-
+document.addEventListener("DOMContentLoaded", function () {
   const $form = $("#bulk-text-form");
   const $successMessage = $(".bulk-text-success");
-  const $errorMessage = $form.siblings(".w-form-fail");
-  const $submitButton = $form.find('input[type="submit"]');
+  const $submitButton = $form.find('button[type="submit"]');
 
-  const endpoint =
+  const verifyEndpoint =
+    "https://xxdy-xbul-g3ez.n7d.xano.io/api:ZFCMxBnL/verify_sender_bulk_text";
+
+  const massTextEndpoint =
     "https://xxdy-xbul-g3ez.n7d.xano.io/api:ZFCMxBnL/mass-text";
 
-  // Keep custom messages hidden initially
+  const homePageUrl = "/";
+  const authToken = localStorage.getItem("authToken");
+
+  // Hide the form until the user is authenticated and authorized
+  $form.hide();
   $successMessage.hide();
-  $errorMessage.hide();
+
+  /*
+   * ==========================================
+   * VERIFY PAGE ACCESS
+   * ==========================================
+   */
+
+  if (!authToken) {
+    alert("You must be logged in to access this page.");
+    window.location.replace(homePageUrl);
+    return;
+  }
+
+  $.ajax({
+    url: verifyEndpoint,
+    method: "GET",
+    dataType: "json",
+
+    headers: {
+      Authorization: "Bearer " + authToken
+    },
+
+    success: function (response) {
+      console.log("Bulk text access response:", response);
+
+      if (response && response.can_send_mass_texts === true) {
+        // User is authenticated and has permission
+        $form.show();
+        return;
+      }
+
+      // User is authenticated but does not have permission
+      alert("You do not have permission to access this page.");
+      window.location.replace(homePageUrl);
+    },
+
+    error: function (xhr, status, error) {
+      console.error("Bulk text access verification failed:", {
+        status: status,
+        error: error,
+        response: xhr.responseJSON || xhr.responseText
+      });
+
+      if (xhr.status === 401) {
+        localStorage.removeItem("authToken");
+
+        alert("Your session has expired. Please log in again.");
+      } else {
+        alert("You do not have permission to access this page.");
+      }
+
+      window.location.replace(homePageUrl);
+    }
+  });
+
+  /*
+   * ==========================================
+   * SUBMIT BULK TEXT FORM
+   * ==========================================
+   */
 
   $form.on("submit", function (event) {
     event.preventDefault();
 
-    const authToken = localStorage.getItem("authToken");
+    const currentAuthToken = localStorage.getItem("authToken");
     const group = $("#group").val();
     const message = $("#message").val().trim();
 
-    // Basic frontend validation
     if (!group) {
       alert("Please select a recipient group.");
       return;
@@ -32,28 +94,30 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    if (!authToken) {
+    if (!currentAuthToken) {
       alert("Your session has expired. Please log in again.");
+      window.location.replace(homePageUrl);
       return;
     }
 
-    const originalButtonText = $submitButton.val();
+    const originalButtonText = $submitButton.text();
+    const waitingText =
+      $submitButton.attr("data-wait") || "Please wait...";
 
     $submitButton
       .prop("disabled", true)
-      .val($submitButton.attr("data-wait") || "Please wait...");
+      .text(waitingText);
 
     $successMessage.hide();
-    $errorMessage.hide();
 
     $.ajax({
-      url: endpoint,
+      url: massTextEndpoint,
       method: "POST",
       contentType: "application/json",
       dataType: "json",
 
       headers: {
-        Authorization: "Bearer " + authToken
+        Authorization: "Bearer " + currentAuthToken
       },
 
       data: JSON.stringify({
@@ -64,13 +128,14 @@ document.addEventListener('DOMContentLoaded', function() {
       success: function (response) {
         console.log("Mass text response:", response);
 
-        // Reset the form after successful submission
+        // Reset dropdown and message
         $form[0].reset();
 
-        // Show the custom success message
-        $successMessage.stop(true, true).css("display", "flex");
+        // Show custom success message
+        $successMessage
+          .stop(true, true)
+          .css("display", "flex");
 
-        // Hide it again after 3 seconds
         setTimeout(function () {
           $successMessage.fadeOut();
         }, 3000);
@@ -83,26 +148,31 @@ document.addEventListener('DOMContentLoaded', function() {
           response: xhr.responseJSON || xhr.responseText
         });
 
-        let errorText = "Something went wrong while sending the text messages.";
-
         if (xhr.status === 401) {
-          errorText = "Your session has expired. Please log in again.";
-        } else if (xhr.responseJSON?.message) {
-          errorText = xhr.responseJSON.message;
+          localStorage.removeItem("authToken");
+
+          alert("Your session has expired. Please log in again.");
+          window.location.replace(homePageUrl);
+          return;
         }
 
-        $errorMessage
-          .find("div")
-          .first()
-          .text(errorText);
+        if (xhr.status === 403) {
+          alert("You do not have permission to send bulk text messages.");
+          window.location.replace(homePageUrl);
+          return;
+        }
 
-        $errorMessage.stop(true, true).css("display", "block");
+        const errorMessage =
+          xhr.responseJSON?.message ||
+          "Something went wrong while sending the text messages.";
+
+        alert(errorMessage);
       },
 
       complete: function () {
         $submitButton
           .prop("disabled", false)
-          .val(originalButtonText);
+          .text(originalButtonText);
       }
     });
   });
