@@ -1,6 +1,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   const $form = $("#bulk-text-form");
+  const $header = $(".bulk-text-header");
   const $successMessage = $(".bulk-text-success");
   const $submitButton = $form.find('button[type="submit"]');
 
@@ -13,7 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const homePageUrl = "/";
   const authToken = localStorage.getItem("authToken");
 
-  // Hide the form until the user is authenticated and authorized
+  // Hide protected content until access is verified
+  $header.hide();
   $form.hide();
   $successMessage.hide();
 
@@ -42,12 +44,12 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("Bulk text access response:", response);
 
       if (response && response.can_send_mass_texts === true) {
-        // User is authenticated and has permission
+        // User is authenticated and authorized
+        $header.show();
         $form.show();
         return;
       }
 
-      // User is authenticated but does not have permission
       alert("You do not have permission to access this page.");
       window.location.replace(homePageUrl);
     },
@@ -61,7 +63,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (xhr.status === 401) {
         localStorage.removeItem("authToken");
-
         alert("Your session has expired. Please log in again.");
       } else {
         alert("You do not have permission to access this page.");
@@ -95,6 +96,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (!currentAuthToken) {
+      $header.hide();
+      $form.hide();
+
       alert("Your session has expired. Please log in again.");
       window.location.replace(homePageUrl);
       return;
@@ -128,10 +132,8 @@ document.addEventListener("DOMContentLoaded", function () {
       success: function (response) {
         console.log("Mass text response:", response);
 
-        // Reset dropdown and message
         $form[0].reset();
 
-        // Show custom success message
         $successMessage
           .stop(true, true)
           .css("display", "flex");
@@ -151,12 +153,18 @@ document.addEventListener("DOMContentLoaded", function () {
         if (xhr.status === 401) {
           localStorage.removeItem("authToken");
 
+          $header.hide();
+          $form.hide();
+
           alert("Your session has expired. Please log in again.");
           window.location.replace(homePageUrl);
           return;
         }
 
         if (xhr.status === 403) {
+          $header.hide();
+          $form.hide();
+
           alert("You do not have permission to send bulk text messages.");
           window.location.replace(homePageUrl);
           return;
